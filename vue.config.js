@@ -1,5 +1,5 @@
 module.exports = {
-  outputDir: 'docs',
+  publicPath: process.env.NODE_ENV === 'production' ? '/wuzhi_column' : '/',
   devServer: {
     port: 1016,
     overlay: {
