@@ -1,5 +1,3 @@
-# zhihu_column
-
 ## Project setup
 ```
 npm install
