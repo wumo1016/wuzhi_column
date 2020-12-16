@@ -1,0 +1,7 @@
+{
+    // 开始template的ts类型支持支持
+    "vetur.experimental.templateInterpolationService": true,
+    "eslint.validate": [
+        "typescript",
+    ]
+}
