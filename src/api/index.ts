@@ -1,5 +1,13 @@
 import request from './request'
 
+// 获取专栏列表
+export const getColumns = (params = null) =>
+  request({
+    url: '/columns',
+    method: 'get',
+    params
+  })
+
 export function Post(url: string, data = null) {
   return request({
     url,

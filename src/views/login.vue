@@ -32,6 +32,7 @@ import ValidateInput, { RulesProp } from '@/components/validateInput.vue'
 import ValidateForm from '@/components/validateForm.vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import * as types from '@/store/action-types'
 export default defineComponent({
   components: { ValidateInput, ValidateForm },
   setup() {
@@ -57,7 +58,7 @@ export default defineComponent({
     const router = useRouter()
     const onSubmit = (res: boolean) => {
       if (res) {
-        store.commit('login')
+        store.commit(types.SET_USER)
         router.push('/')
       }
     }

@@ -17,12 +17,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { TestPost } from '@/store/testData'
+import { ArticleProps } from '@/public/types'
 export default defineComponent({
   props: {
     list: {
       required: true,
-      type: Array as PropType<TestPost[]>
+      type: Array as PropType<ArticleProps[]>
     }
   }
 })

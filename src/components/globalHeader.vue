@@ -39,7 +39,7 @@
 import { defineComponent, PropType } from 'vue'
 import DropDown from '@/components/dropDown.vue'
 import DropDownItme from '@/components/dropDownItem.vue'
-import { UserProps } from '@/store'
+import { UserProps } from '@/public/types'
 
 export default defineComponent({
   components: { DropDown, DropDownItme },

@@ -24,18 +24,22 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, onMounted } from 'vue'
 import ColumnList from '@/components/columnList.vue'
 import { useStore } from 'vuex'
-import { GlobalDataProps } from '@/store'
+import { GlobalDataProps } from '@/public/types'
+import * as types from '@/store/action-types'
 export default defineComponent({
   components: { ColumnList },
   setup() {
     const store = useStore<GlobalDataProps>()
-    const testData = computed(() => store.state.columns)
+    const list = computed(() => store.state.columnList)
     const biggerColumnLen = computed(() => store.getters.biggerColumnLen)
+    onMounted(() => {
+      store.dispatch(types.SET_COLUMN_LIST)
+    })
     return {
-      list: testData,
+      list,
       biggerColumnLen
     }
   }

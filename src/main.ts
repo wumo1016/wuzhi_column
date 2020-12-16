@@ -5,8 +5,6 @@ import store from './store'
 
 import './styles/index.scss'
 
-import '@/api'
-
 createApp(App)
   .use(store)
   .use(router)

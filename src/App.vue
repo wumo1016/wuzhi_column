@@ -11,7 +11,7 @@ import { computed, defineComponent } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GobalHeader from '@/components/globalHeader.vue'
 import { useStore } from 'vuex'
-import { GlobalDataProps } from '@/store'
+import { GlobalDataProps } from '@/public/types'
 export default defineComponent({
   name: 'App',
   components: { GobalHeader },

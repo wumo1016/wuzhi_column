@@ -1,46 +1,46 @@
 import { createStore } from 'vuex'
-import { testData, testPosts, ColumnProps, TestPost } from './testData'
-export interface UserProps {
-  isLogin: boolean
-  name?: string
-  id?: number
-  columnId?: number
-}
-export interface GlobalDataProps {
-  columns: ColumnProps[]
-  posts: TestPost[]
-  user: UserProps
-}
+import { GlobalDataProps } from '@/public/types'
+import { getColumns } from '@/api'
+import * as types from '@/store/action-types'
+
 export default createStore<GlobalDataProps>({
   state: {
-    columns: testData,
-    posts: testPosts,
+    columnList: [],
+    articleList: [],
     user: {
       isLogin: false
     }
   },
   getters: {
     biggerColumnLen(state) {
-      return state.columns.filter(v => v.id > 2).length
+      return state.columnList.filter(v => v.id > 2).length
     },
     getColumnById(state) {
       return (id: number) => {
-        return state.columns.find(v => v.id === id)
+        return state.columnList.find(v => v.id === id)
       }
     },
     getPostByCid(state) {
       return (cid: number) => {
-        return state.posts.filter(v => v.columnId === cid)
+        return state.articleList.filter(v => v.columnId === cid)
       }
     }
   },
   mutations: {
-    login(state) {
+    [types.SET_COLUMN_LIST](state, data) {
+      state.columnList = data.list
+    },
+    [types.SET_USER](state) {
       state.user = { ...state.user, isLogin: true, name: 'admin', columnId: 1 }
     },
     createPost(state, data) {
       state.posts.push(data)
     }
   },
-  actions: {}
+  actions: {
+    async [types.SET_COLUMN_LIST]({ commit }) {
+      const data = await getColumns()
+      commit(types.SET_COLUMN_LIST, data)
+    }
+  }
 })

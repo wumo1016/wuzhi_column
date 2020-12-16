@@ -4,7 +4,7 @@
       <div class="card h-100 shadow-sm">
         <div class="card-body text-center">
           <img
-            :src="item.avatar"
+            :src="item.avatar && item.avatar.url"
             :alt="item.title"
             class="rounded-circle border border-light w-25 my-3"
           />
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import { ColumnProps } from '@/store/testData'
+import { ColumnProps } from '@/public/types'
 export default defineComponent({
   props: {
     list: {

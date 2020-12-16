@@ -33,8 +33,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
-import { GlobalDataProps } from '@/store'
-import { TestPost } from '@/store/testData'
+import { GlobalDataProps } from '@/public/types'
+import { ArticleProps } from '@/public/types'
 import ValidateInput, { RulesProp } from '@/components/validateInput.vue'
 import ValidateForm from '@/components/validateForm.vue'
 import { useRouter } from 'vue-router'
@@ -59,7 +59,7 @@ export default defineComponent({
       if (result) {
         const { columnId } = store.state.user
         if (columnId) {
-          const newPosts: TestPost = {
+          const newPosts: ArticleProps = {
             id: Date.now(),
             title: titleVal.value,
             content: contentVal.value,

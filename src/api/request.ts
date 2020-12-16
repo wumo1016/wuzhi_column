@@ -8,9 +8,11 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(response => {
-  return response
+  if (response.data && response.data.code === 0) {
+    return Promise.resolve(response.data.data)
+  } else {
+    return Promise.reject(response)
+  }
 })
-
-axios.get('/columns?currentPage=1&pageSize=5')
 
 export default axios
