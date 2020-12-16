@@ -1,7 +1,9 @@
 <template>
   <div class="app_box">
     <GobalHeader :user="user" />
-    <router-view></router-view>
+    <div class="layout_center px-4">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 <script lang="ts">
