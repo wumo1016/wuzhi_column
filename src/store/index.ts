@@ -3,14 +3,15 @@ import { GlobalDataProps } from '@/public/types'
 import { getColumnList, getColumnInfo, getArticleList } from '@/api'
 import * as types from '@/store/action-types'
 
-export default createStore<GlobalDataProps>({
+const store = createStore<GlobalDataProps>({
   state: {
-    columnList: [],
-    currentColumn: null,
-    articleList: [],
+    loading: false,
     user: {
       isLogin: false
-    }
+    },
+    columnList: [],
+    currentColumn: null,
+    articleList: []
   },
   getters: {
     getArticleListByCid(state) {
@@ -32,8 +33,8 @@ export default createStore<GlobalDataProps>({
     [types.SET_ARTICLE_LIST](state, data) {
       state.articleList = data.list
     },
-    createPost(state, data) {
-      state.articleList.push(data)
+    [types.SET_LOADING](state, data) {
+      state.loading = data
     }
   },
   actions: {
@@ -52,3 +53,5 @@ export default createStore<GlobalDataProps>({
     }
   }
 })
+
+export default store

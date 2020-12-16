@@ -66,7 +66,6 @@ export default defineComponent({
           //   columnId,
           //   createdAt: new Date().toLocaleString()
           // }
-          // store.commit('createPost', newPosts)
           // router.push(`/column/${columnId}`)
         }
       }

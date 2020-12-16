@@ -28,6 +28,7 @@ export interface ArticleProps {
 }
 
 export interface GlobalDataProps {
+  loading: boolean
   user: UserProps
   columnList: ColumnProps[]
   currentColumn: ColumnProps | null

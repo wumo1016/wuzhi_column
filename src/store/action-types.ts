@@ -6,3 +6,5 @@ export const SET_COLUMN_LIST = 'SET_COLUMN_LIST'
 export const SET_CURRENT_COLUMN = 'SET_CURRENT_COLUMN'
 // 设置文章列表
 export const SET_ARTICLE_LIST = 'SET_ARTICLE_LIST'
+// 设置loading
+export const SET_LOADING = 'SET_LOADING'

@@ -1,6 +1,7 @@
 <template>
   <div class="app_box">
     <GobalHeader :user="user" />
+    {{ isLoading }}
     <div class="layout_center px-4">
       <router-view></router-view>
     </div>
@@ -18,8 +19,10 @@ export default defineComponent({
   setup() {
     const store = useStore<GlobalDataProps>()
     const user = computed(() => store.state.user)
+    const isLoading = computed(() => store.state.loading)
     return {
-      user
+      user,
+      isLoading
     }
   }
 })
