@@ -4,9 +4,9 @@
       <div class="card h-100 shadow-sm">
         <div class="card-body text-center">
           <img
-            :src="item.avatar && item.avatar.url"
+            :src="item.avatar && item.avatar.dealUrl"
             :alt="item.title"
-            class="rounded-circle border border-light w-25 my-3"
+            class="rounded-circle border border-light my-3 w-30"
           />
           <h5 class="card-title">{{ item.title }}</h5>
           <p class="card-text text-left">
@@ -38,10 +38,11 @@ export default defineComponent({
     const columnList = computed(() => {
       return props.list.map(item => {
         if (item.avatar) {
-          item.avatar.url = `${item.avatar.url}?x-oss-process=image/resize,m_fill,h_110,w_200`
+          item.avatar.dealUrl = `${item.avatar.url}?x-oss-process=image/resize,m_fill,h_100,w_100`
         } else {
           item.avatar = {
-            url: require('@/assets/column.jpg')
+            url: '',
+            dealUrl: require('@/assets/column.jpg')
           }
         }
         return item

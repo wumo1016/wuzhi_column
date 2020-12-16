@@ -6,7 +6,7 @@
         <div class="row my-3 align-items-center">
           <div class="col-4">
             <img
-              :src="post.image && post.image.url"
+              :src="post.image && post.image.dealUrl"
               :alt="post.title"
               class="rounded-lg w-100"
             />

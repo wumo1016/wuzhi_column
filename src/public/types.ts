@@ -7,6 +7,7 @@ export interface UserProps {
 
 interface ImageProps {
   url: string
+  dealUrl?: string
 }
 
 export interface ColumnProps {

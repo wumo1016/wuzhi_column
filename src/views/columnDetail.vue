@@ -6,7 +6,7 @@
     >
       <div class="col-2 text-center">
         <img
-          :src="columnInfo.avatar && columnInfo.avatar.url"
+          :src="columnInfo.avatar && columnInfo.avatar.dealUrl"
           :alt="columnInfo.title"
           class="rounded-circle border w-100"
         />
@@ -34,14 +34,20 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore<GlobalDataProps>()
     const currentId = route.params.id
-    const columnInfo = computed(() => store.state.currentColumn)
+    const columnInfo = computed(() => {
+      if (store.state.currentColumn && store.state.currentColumn.avatar) {
+        store.state.currentColumn.avatar.dealUrl = `${store.state.currentColumn.avatar.url}?x-oss-process=image/resize,m_fill,h_110,w_200`
+      }
+      return store.state.currentColumn
+    })
     const list = computed(() =>
       store.state.articleList.map(item => {
         if (item.image) {
-          item.image.url = `${item.image.url}?x-oss-process=image/resize,m_fill,h_110,w_200`
+          item.image.dealUrl = `${item.image.url}?x-oss-process=image/resize,m_fill,h_110,w_200`
         } else {
           item.image = {
-            url: require('@/assets/column.jpg')
+            url: '',
+            dealUrl: require('@/assets/column.jpg')
           }
         }
         return item
