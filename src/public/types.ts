@@ -5,28 +5,30 @@ export interface UserProps {
   columnId?: number
 }
 
-interface AvatarProps {
+interface ImageProps {
   url: string
 }
 
 export interface ColumnProps {
-  id: number
+  _id: string
   title: string
-  avatar?: AvatarProps
+  avatar?: ImageProps
   description: string
 }
 
 export interface ArticleProps {
-  id: number
-  columnId: number
+  _id: string
+  column: string
   title: string
-  content: string
-  image?: string
+  excerpt?: string
+  content?: string
+  image?: ImageProps
   createdAt: string
 }
 
 export interface GlobalDataProps {
   user: UserProps
   columnList: ColumnProps[]
+  currentColumn: ColumnProps | null
   articleList: ArticleProps[]
 }

@@ -1,41 +1,21 @@
 import request from './request'
 
 // 获取专栏列表
-export const getColumns = (params = null) =>
+export const getColumnList = () =>
   request({
     url: '/columns',
-    method: 'get',
-    params
+    method: 'get'
+  })
+// 获取专栏信息
+export const getColumnInfo = (id: string) =>
+  request({
+    url: `/columns/${id}`,
+    method: 'get'
   })
 
-export function Post(url: string, data = null) {
-  return request({
-    url,
-    method: 'post',
-    data
+// 获取专栏文章列表
+export const getArticleList = (id: string) =>
+  request({
+    url: `/columns/${id}/posts`,
+    method: 'get'
   })
-}
-
-export function Delete(url: string, params = null) {
-  return request({
-    url,
-    method: 'delete',
-    params
-  })
-}
-
-export function Put(url: string, data = null) {
-  return request({
-    url,
-    method: 'put',
-    data
-  })
-}
-
-export function Get(url: string, params = null) {
-  return request({
-    url,
-    method: 'get',
-    params
-  })
-}

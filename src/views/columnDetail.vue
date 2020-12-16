@@ -5,20 +5,27 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import PostList from '@/components/postList.vue'
+import * as types from '@/store/action-types'
+import { GlobalDataProps } from '@/public/types'
+
 export default defineComponent({
   components: { PostList },
   setup() {
     const route = useRoute()
-    const store = useStore()
-    const currentId = +route.params.id
-    const column = computed(() => store.getters.getColumnById(currentId))
-    const list = computed(() => store.getters.getPostByCid(currentId))
+    const store = useStore<GlobalDataProps>()
+    const currentId = route.params.id
+    const columnInfo = computed(() => store.state.currentColumn)
+    const list = computed(() => store.state.articleList)
+    onMounted(() => {
+      store.dispatch(types.SET_CURRENT_COLUMN, currentId)
+      store.dispatch(types.SET_ARTICLE_LIST, currentId)
+    })
     return {
-      column,
+      columnInfo,
       list
     }
   }
