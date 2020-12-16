@@ -37,8 +37,12 @@ export default defineComponent({
   setup(props) {
     const columnList = computed(() => {
       return props.list.map(item => {
-        if (!item.avatar) {
-          item.avatar = require('@/assets/column.jpg')
+        if (item.avatar) {
+          item.avatar.url = `${item.avatar.url}?x-oss-process=image/resize,m_fill,h_110,w_200`
+        } else {
+          item.avatar = {
+            url: require('@/assets/column.jpg')
+          }
         }
         return item
       })

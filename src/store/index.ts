@@ -42,6 +42,7 @@ export default createStore<GlobalDataProps>({
       commit(types.SET_COLUMN_LIST, data)
     },
     async [types.SET_CURRENT_COLUMN]({ commit }, id: string) {
+      commit(types.SET_CURRENT_COLUMN, null)
       const data = await getColumnInfo(id)
       commit(types.SET_CURRENT_COLUMN, data)
     },
