@@ -19,3 +19,16 @@ export const getArticleList = (id: string) =>
     url: `/columns/${id}/posts`,
     method: 'get'
   })
+// 登录
+export const login = (data: null) =>
+  request({
+    url: `/user/login`,
+    method: 'post',
+    data
+  })
+// 获取用户信息
+export const getUserInfo = () =>
+  request({
+    url: `/user/current`,
+    method: 'get'
+  })

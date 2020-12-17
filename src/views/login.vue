@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="login_box card">
+    <h2>登录</h2>
     <ValidateForm @formSubmit="onSubmit">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">邮箱</label>
@@ -20,7 +21,7 @@
       </div>
       <!-- 全写是 v-slot="submit" -->
       <template #submit>
-        <span class="btn btn-danger">提交</span>
+        <span class="btn btn-primary">提交</span>
       </template>
     </ValidateForm>
   </div>
@@ -36,8 +37,8 @@ import * as types from '@/store/action-types'
 export default defineComponent({
   components: { ValidateInput, ValidateForm },
   setup() {
-    const emailVal = ref('')
-    const passwordVal = ref('')
+    const emailVal = ref('111@test.com')
+    const passwordVal = ref('111111')
     const emailRules: RulesProp = [
       {
         type: 'required',
@@ -56,9 +57,14 @@ export default defineComponent({
     ]
     const store = useStore()
     const router = useRouter()
-    const onSubmit = (res: boolean) => {
+    const onSubmit = async (res: boolean) => {
       if (res) {
-        store.commit(types.SET_USER)
+        const payload = {
+          email: emailVal.value,
+          password: passwordVal.value
+        }
+        await store.dispatch(types.SET_TOKEN, payload)
+        await store.dispatch(types.SET_USER)
         router.push('/')
       }
     }
@@ -73,4 +79,26 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.login_box {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 30px 50px;
+  margin-top: 100px;
+  h2 {
+    font-size: 2rem;
+    text-align: center;
+  }
+  .btn {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 1.3rem;
+  }
+  .form-control {
+    line-height: 2.5;
+  }
+  input {
+    height: 40px;
+  }
+}
+</style>

@@ -1,5 +1,7 @@
 // 设置用户信息
 export const SET_USER = 'SET_USER'
+// 设置token
+export const SET_TOKEN = 'SET_TOKEN'
 // 设置专栏列表
 export const SET_COLUMN_LIST = 'SET_COLUMN_LIST'
 // 设置当前专栏信息

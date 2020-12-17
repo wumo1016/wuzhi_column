@@ -16,7 +16,7 @@
       </ul>
       <ul v-else class="list-inline mb-0">
         <li class="list-inline-item">
-          <DropDown :title="`你好,${user.name}`">
+          <DropDown :title="`你好,${user.nickName}`">
             <DropDownItme>
               <router-link to="/create" class="dropdown-item">
                 新建文章

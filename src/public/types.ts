@@ -1,8 +1,9 @@
 export interface UserProps {
   isLogin: boolean
-  name?: string
+  nickName?: string
   id?: number
   columnId?: number
+  email?: string
 }
 
 interface ImageProps {
@@ -30,6 +31,7 @@ export interface ArticleProps {
 export interface GlobalDataProps {
   loading: boolean
   user: UserProps
+  token: string
   columnList: ColumnProps[]
   currentColumn: ColumnProps | null
   articleList: ArticleProps[]

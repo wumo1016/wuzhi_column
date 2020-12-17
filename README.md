@@ -2,6 +2,7 @@
 ```
 npm install
 ```
+如安装失败，可以使用  `cnpm -- install`
 
 ### Compiles and hot-reloads for development
 ```
