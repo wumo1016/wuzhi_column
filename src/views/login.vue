@@ -45,7 +45,7 @@ import * as types from '@/store/action-types'
 export default defineComponent({
   components: { ValidateInput, ValidateForm },
   setup() {
-    const emailVal = ref('666qq.com')
+    const emailVal = ref('666@qq.com')
     const passwordVal = ref('123456')
     const emailRules: RulesProp = [
       {
