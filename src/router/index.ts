@@ -1,11 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import Layout from '@/views/layout.vue'
 import store from '@/store'
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '',
-    name: 'Home',
-    component: () => import('@/views/home.vue')
-  },
   {
     path: '/login',
     name: 'Login',
@@ -13,15 +9,32 @@ const routes: Array<RouteRecordRaw> = [
     meta: { redirectHome: true }
   },
   {
-    path: '/column/:id',
-    name: 'ColumnDetail',
-    component: () => import('@/views/columnDetail.vue')
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/register.vue')
   },
   {
-    path: '/create',
-    name: 'CreatePost',
-    component: () => import('@/views/createPost.vue'),
-    meta: { requiredLogin: true }
+    path: '',
+    name: 'Layout',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: () => import('@/views/home.vue')
+      },
+      {
+        path: '/column/:id',
+        name: 'ColumnDetail',
+        component: () => import('@/views/columnDetail.vue')
+      },
+      {
+        path: '/create',
+        name: 'CreatePost',
+        component: () => import('@/views/createPost.vue'),
+        meta: { requiredLogin: true }
+      }
+    ]
   }
 ]
 

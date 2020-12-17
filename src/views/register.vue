@@ -1,34 +1,52 @@
 <template>
   <div class="login_bac">
     <div class="login_box card">
-      <h2>登录</h2>
+      <h2>注册</h2>
       <ValidateForm @formSubmit="onSubmit">
         <div class="mb-3">
           <label class="form-label">邮箱</label>
           <ValidateInput
-            v-model="emailVal"
+            v-model="email"
             :rules="emailRules"
             placeholder="请输入邮箱"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">昵称</label>
+          <ValidateInput
+            v-model="nickName"
+            :rules="nickNameRules"
+            placeholder="请输入昵称"
           />
         </div>
         <div class="mb-3">
           <label class="form-label">密码</label>
           <ValidateInput
             type="password"
-            v-model="passwordVal"
+            v-model="password"
             :rules="passwordRules"
             placeholder="请输入密码"
           />
         </div>
-        <!-- 全写是 v-slot="submit" -->
+        <div class="mb-3">
+          <label class="form-label">
+            再次输入密码
+          </label>
+          <ValidateInput
+            type="password"
+            v-model="rePassword"
+            :rules="passwordRules"
+            placeholder="请输入密码"
+          />
+        </div>
         <template #submit>
           <span class="btn btn-primary">提交</span>
         </template>
       </ValidateForm>
       <div class="d-flex justify-content-between mt-1">
         <router-link to="/" class="text-primary">去首页</router-link>
-        <router-link to="/register" class="text-primary">
-          没有账户，去注册
+        <router-link to="/login" class="text-primary">
+          已有账户，去登录
         </router-link>
       </div>
     </div>
@@ -40,13 +58,14 @@ import { defineComponent, ref } from 'vue'
 import ValidateInput, { RulesProp } from '@/components/validateInput.vue'
 import ValidateForm from '@/components/validateForm.vue'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
-import * as types from '@/store/action-types'
+import { register } from '@/api/index'
 export default defineComponent({
   components: { ValidateInput, ValidateForm },
   setup() {
-    const emailVal = ref('666qq.com')
-    const passwordVal = ref('123456')
+    const email = ref('')
+    const nickName = ref('')
+    const password = ref('')
+    const rePassword = ref('')
     const emailRules: RulesProp = [
       {
         type: 'required',
@@ -57,30 +76,49 @@ export default defineComponent({
         message: '邮箱格式不正确'
       }
     ]
+    const nickNameRules: RulesProp = [
+      {
+        type: 'required',
+        message: '昵称不能为空'
+      }
+    ]
     const passwordRules: RulesProp = [
       {
         type: 'required',
         message: '密码不能为空'
       }
     ]
-    const store = useStore()
+    const rePasswordRules: RulesProp = [
+      {
+        type: 'required',
+        message: '密码不能为空'
+      },
+      {
+        type: 'custom',
+        validator: () => password.value === rePassword.value
+      }
+    ]
     const router = useRouter()
     const onSubmit = async (res: boolean) => {
       if (res) {
         const payload = {
-          email: emailVal.value,
-          password: passwordVal.value
+          email: email.value,
+          nickName: nickName.value,
+          password: password.value
         }
-        await store.dispatch(types.SET_TOKEN, payload)
-        await store.dispatch(types.SET_USER)
-        router.push('/')
+        await register(payload)
+        router.push('/login')
       }
     }
     return {
+      email,
+      nickName,
+      password,
+      rePassword,
       emailRules,
+      nickNameRules,
       passwordRules,
-      emailVal,
-      passwordVal,
+      rePasswordRules,
       onSubmit
     }
   }
@@ -91,7 +129,7 @@ export default defineComponent({
 .login_bac {
   height: 100%;
   background: url(~@/assets/login_bac.png) no-repeat center / cover;
-  padding-top: 100px;
+  padding-top: 1vw;
   .login_box {
     max-width: 400px;
     margin: 0 auto;

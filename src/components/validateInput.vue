@@ -1,5 +1,5 @@
 <template>
-  <div class="validate-input-container pb-3">
+  <div class="validate-input-container">
     <input
       v-if="tag !== 'textarea'"
       type="text"
@@ -20,7 +20,7 @@
       @input="updateValue"
       v-bind="$attrs"
     />
-    <span v-if="inputRef.error" class="invalid-feedback">
+    <span v-show="inputRef.error" class="invalid-feedback">
       {{ inputRef.message }}
     </span>
   </div>

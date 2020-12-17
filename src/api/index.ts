@@ -32,3 +32,10 @@ export const getUserInfo = () =>
     url: `/user/current`,
     method: 'get'
   })
+// 注册
+export const register = (data: null) =>
+  request({
+    url: `/users`,
+    method: 'post',
+    data
+  })
