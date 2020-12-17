@@ -26,7 +26,14 @@
               <a href="#" class="dropdown-item">编辑资料</a>
             </DropDownItme>
             <DropDownItme>
-              <a href="#" class="dropdown-item">退出登录</a>
+              <div
+                style="cursor: pointer"
+                href="#"
+                class="dropdown-item"
+                @click="logout"
+              >
+                退出登录
+              </div>
             </DropDownItme>
           </DropDown>
         </li>
@@ -40,6 +47,7 @@ import { defineComponent, PropType } from 'vue'
 import DropDown from '@/components/dropDown.vue'
 import DropDownItme from '@/components/dropDownItem.vue'
 import { UserProps } from '@/public/types'
+import { clearStorage } from '@/public/storage'
 
 export default defineComponent({
   components: { DropDown, DropDownItme },
@@ -50,7 +58,13 @@ export default defineComponent({
     }
   },
   setup() {
-    return {}
+    const logout = () => {
+      clearStorage()
+      location.reload()
+    }
+    return {
+      logout
+    }
   }
 })
 </script>
