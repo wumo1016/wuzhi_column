@@ -51,8 +51,9 @@ const store = createStore<GlobalDataProps>({
       state.token = data.token
     },
     [types.SET_USER](state, data) {
-      setLocalUserInfo({ ...data, isLogin: true })
-      state.user = { ...data, isLogin: true }
+      const userInfo = { ...data, isLogin: true }
+      setLocalUserInfo(userInfo)
+      state.user = userInfo
     }
   },
   actions: {

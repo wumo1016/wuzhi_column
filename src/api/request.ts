@@ -2,6 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 import * as types from '@/store/action-types'
 import { getLocalToken } from '@/public/storage'
+import createMessage from '@/public/createMessage'
 
 axios.defaults.baseURL = 'http://apis.imooc.com/api/'
 
@@ -13,9 +14,9 @@ axios.interceptors.request.use(
     config.params = { ...config.params, icode: '0BC9ABB4AD85B874' }
     return config
   },
-  err => {
+  e => {
     store.commit(types.SET_LOADING, false)
-    return Promise.reject(err)
+    return Promise.reject(e)
   }
 )
 
@@ -28,9 +29,14 @@ axios.interceptors.response.use(
       return Promise.reject(response)
     }
   },
-  err => {
+  e => {
+    const { error } = e.response.data
+    createMessage({
+      type: 'error',
+      message: error
+    })
     store.commit(types.SET_LOADING, false)
-    return Promise.reject(err)
+    return Promise.reject(e)
   }
 )
 

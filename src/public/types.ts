@@ -1,9 +1,10 @@
 export interface UserProps {
   isLogin: boolean
   nickName?: string
-  id?: number
+  _id?: string
   columnId?: number
   email?: string
+  description?: string
 }
 
 interface ImageProps {
@@ -35,4 +36,10 @@ export interface GlobalDataProps {
   columnList: ColumnProps[]
   currentColumn: ColumnProps | null
   articleList: ArticleProps[]
+}
+
+export interface MessageProps {
+  type?: 'default' | 'success' | 'error'
+  message?: string
+  timeout?: number
 }
