@@ -6,7 +6,7 @@ set -e
 # 生成静态文件
 npm run build
 
-# 进入静态文件夹
+# 进入静态文件夹 并复制文件
 cd dist
 cp index.html 404.html
 
