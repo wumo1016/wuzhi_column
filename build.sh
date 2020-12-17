@@ -8,6 +8,7 @@ npm run build
 
 # 进入静态文件夹
 cd dist
+cp index.html 404.html
 
 # commit提交所有文件
 git init
