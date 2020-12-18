@@ -12,7 +12,6 @@
     />
     <textarea
       v-else
-      type="text"
       class="form-control"
       :class="{ 'is-invalid': inputRef.error }"
       :value="inputRef.val"

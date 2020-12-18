@@ -20,7 +20,7 @@ export interface ColumnProps {
 }
 
 export interface ArticleProps {
-  _id: string
+  _id: string | ''
   column: string
   title: string
   excerpt?: string

@@ -29,9 +29,9 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/columnDetail.vue')
       },
       {
-        path: '/create',
-        name: 'CreatePost',
-        component: () => import('@/views/createPost.vue'),
+        path: '/createArticle',
+        name: 'CreateArticle',
+        component: () => import('@/views/createArticle.vue'),
         meta: { requiredLogin: true }
       }
     ]

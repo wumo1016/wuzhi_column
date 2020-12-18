@@ -10,8 +10,15 @@ axios.interceptors.request.use(
   config => {
     store.commit(types.SET_LOADING, true)
     config.headers['Authorization'] = `Bearer ${getLocalToken()}`
-    config.data = { ...config.data, icode: '0BC9ABB4AD85B874' }
-    config.params = { ...config.params, icode: '0BC9ABB4AD85B874' }
+    const code = '0BC9ABB4AD85B874'
+    if (config.data instanceof FormData) {
+      config.data.append('icode', code)
+      config.headers['Content-Type'] = 'multipart/form-data'
+    } else if (config.method === 'post' || config.method === 'patch') {
+      config.data = { ...config.data, icode: code }
+    } else {
+      config.params = { ...config.params, icode: code }
+    }
     return config
   },
   e => {

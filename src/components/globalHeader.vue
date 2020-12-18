@@ -20,7 +20,7 @@
         <li class="list-inline-item">
           <DropDown :title="`你好,${user.nickName}`">
             <DropDownItme>
-              <router-link to="/create" class="dropdown-item">
+              <router-link to="/createArticle" class="dropdown-item">
                 新建文章
               </router-link>
             </DropDownItme>
