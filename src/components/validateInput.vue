@@ -75,6 +75,7 @@ export default defineComponent({
               break
             case 'custom':
               passed = rule.validator ? rule.validator() : true
+              console.log(passed, 1111111)
               break
             default:
               break
@@ -98,4 +99,16 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.validate-form-container {
+  > div {
+    position: relative;
+  }
+}
+.invalid-feedback {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 100%;
+}
+</style>

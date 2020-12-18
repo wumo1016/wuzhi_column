@@ -20,7 +20,7 @@ export const getArticleList = (id: string) =>
     method: 'get'
   })
 // 登录
-export const login = (data: null) =>
+export const login = data =>
   request({
     url: `/user/login`,
     method: 'post',
@@ -33,7 +33,7 @@ export const getUserInfo = () =>
     method: 'get'
   })
 // 注册
-export const register = (data: null) =>
+export const register = data =>
   request({
     url: `/users`,
     method: 'post',

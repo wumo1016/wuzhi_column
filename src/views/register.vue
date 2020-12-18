@@ -1,6 +1,6 @@
 <template>
-  <div class="login_bac">
-    <div class="login_box card">
+  <div class="register_bac">
+    <div class="register_box card">
       <h2>注册</h2>
       <ValidateForm @formSubmit="onSubmit">
         <div class="mb-3">
@@ -35,7 +35,7 @@
           <ValidateInput
             type="password"
             v-model="rePassword"
-            :rules="passwordRules"
+            :rules="rePasswordRules"
             placeholder="请输入密码"
           />
         </div>
@@ -95,7 +95,8 @@ export default defineComponent({
       },
       {
         type: 'custom',
-        validator: () => password.value === rePassword.value
+        validator: () => password.value === rePassword.value,
+        message: '两次密码必须一致'
       }
     ]
     const router = useRouter()
@@ -126,14 +127,17 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.login_bac {
+.register_bac {
   height: 100%;
   background: url(~@/assets/login_bac.png) no-repeat center / cover;
-  padding-top: 1vw;
-  .login_box {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 30px 50px;
+  position: relative;
+  .register_box {
+    position: absolute;
+    left: 50%;
+    width: 400px;
+    top: 50%;
+    transform: translate(-50%, -65%);
+    padding: 20px;
     h2 {
       font-size: 2rem;
       text-align: center;

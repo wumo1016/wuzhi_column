@@ -38,3 +38,11 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="scss" scoped>
+.validate-form-container {
+  > div {
+    position: relative;
+    margin-bottom: 1.6rem !important;
+  }
+}
+</style>

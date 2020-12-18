@@ -45,8 +45,8 @@ import * as types from '@/store/action-types'
 export default defineComponent({
   components: { ValidateInput, ValidateForm },
   setup() {
-    const emailVal = ref('666@qq.com')
-    const passwordVal = ref('123456')
+    const emailVal = ref('')
+    const passwordVal = ref('')
     const emailRules: RulesProp = [
       {
         type: 'required',
@@ -91,11 +91,14 @@ export default defineComponent({
 .login_bac {
   height: 100%;
   background: url(~@/assets/login_bac.png) no-repeat center / cover;
-  padding-top: 100px;
+  position: relative;
   .login_box {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 30px 50px;
+    position: absolute;
+    left: 50%;
+    width: 400px;
+    top: 50%;
+    transform: translate(-50%, -65%);
+    padding: 20px;
     h2 {
       font-size: 2rem;
       text-align: center;
