@@ -5,6 +5,7 @@ export interface UserProps {
   column?: number
   email?: string
   description?: string
+  avatar?: ImageProps
 }
 
 export interface ImageProps {
@@ -27,7 +28,9 @@ export interface ArticleProps {
   excerpt?: string
   content?: string
   image?: ImageProps
-  author: string
+  author?: string | UserProps
+  createdAt?: string
+  isHTML?: boolean
 }
 
 export interface GlobalDataProps {
@@ -37,6 +40,7 @@ export interface GlobalDataProps {
   columnList: ColumnProps[]
   currentColumn: ColumnProps | null
   articleList: ArticleProps[]
+  currentArticle: ArticleProps | null
 }
 
 export interface MessageProps {

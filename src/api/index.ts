@@ -46,3 +46,9 @@ export const createArticle = data =>
     method: 'post',
     data
   })
+// 获取当前文章信息
+export const getArticleInfo = id =>
+  request({
+    url: `/posts/${id}`,
+    method: 'get'
+  })

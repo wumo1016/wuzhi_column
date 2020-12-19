@@ -6,7 +6,8 @@ import {
   getArticleList,
   login,
   getUserInfo,
-  createArticle
+  createArticle,
+  getArticleInfo
 } from '@/api'
 import * as types from '@/store/action-types'
 import {
@@ -25,7 +26,8 @@ const store = createStore<GlobalDataProps>({
     },
     columnList: [],
     currentColumn: null,
-    articleList: []
+    articleList: [],
+    currentArticle: null
   },
   getters: {
     getArticleListByCid(state) {
@@ -55,8 +57,12 @@ const store = createStore<GlobalDataProps>({
       const userInfo = { ...data, isLogin: true }
       setLocalUserInfo(userInfo)
       state.user = userInfo
+    },
+    [types.SET_CURRENT_ARTICLE](state, data) {
+      state.currentArticle = data
     }
   },
+
   actions: {
     async [types.SET_COLUMN_LIST]({ commit }) {
       const data = await getColumnList()
@@ -81,6 +87,11 @@ const store = createStore<GlobalDataProps>({
     },
     async [types.CREATE_ARTICLE](store, payload) {
       await createArticle(payload)
+    },
+    async [types.SET_CURRENT_ARTICLE]({ commit }, payload) {
+      commit(types.SET_CURRENT_ARTICLE, null)
+      const data = await getArticleInfo(payload)
+      commit(types.SET_CURRENT_ARTICLE, data)
     }
   }
 })

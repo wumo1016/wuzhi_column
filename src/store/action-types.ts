@@ -12,3 +12,5 @@ export const SET_ARTICLE_LIST = 'SET_ARTICLE_LIST'
 export const SET_LOADING = 'SET_LOADING'
 // 创建文章
 export const CREATE_ARTICLE = 'CREATE_ARTICLE'
+// 设置当前文章信息
+export const SET_CURRENT_ARTICLE = 'SET_CURRENT_ARTICLE'

@@ -20,12 +20,17 @@
         <li class="list-inline-item">
           <DropDown :title="`你好,${user.nickName}`">
             <DropDownItme>
-              <router-link to="/createArticle" class="dropdown-item">
+              <router-link to="/createEdit" class="dropdown-item">
                 新建文章
               </router-link>
             </DropDownItme>
             <DropDownItme disabled>
               <a href="#" class="dropdown-item">编辑资料</a>
+            </DropDownItme>
+            <DropDownItme>
+              <router-link :to="`/column/${user.column}`" class="dropdown-item">
+                我的专栏
+              </router-link>
             </DropDownItme>
             <DropDownItme>
               <div

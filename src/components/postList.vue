@@ -2,7 +2,9 @@
   <div class="post-list">
     <article v-for="post in list" :key="post._id" class="card mb-3 shadow-sm">
       <div class="card-body">
-        <h4>{{ post.title }}</h4>
+        <h4 style="cursor: pointer" @click="toAricleDetail(post._id)">
+          {{ post.title }}
+        </h4>
         <div class="row my-3 align-items-center">
           <div class="col-4">
             <img
@@ -15,7 +17,7 @@
             {{ post.excerpt }}
           </p>
         </div>
-        <span class="text-muted">{{ post.createdAt }}</span>
+        <span class="text-muted">{{ post.author }}</span>
       </div>
     </article>
   </div>
@@ -24,11 +26,20 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { ArticleProps } from '@/public/types'
+import router from '@/router'
 export default defineComponent({
   props: {
     list: {
       required: true,
       type: Array as PropType<ArticleProps[]>
+    }
+  },
+  setup() {
+    const toAricleDetail = id => {
+      router.push(`/article/${id}`)
+    }
+    return {
+      toAricleDetail
     }
   }
 })
