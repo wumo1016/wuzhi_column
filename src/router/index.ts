@@ -50,13 +50,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (
-    to.meta.requiredLogin &&
-    to.path !== '/login' &&
-    !store.state.user.isLogin
-  ) {
+  const { user } = store.state
+  const { requiredLogin, redirectHome } = to.meta
+  if (requiredLogin && to.path !== '/login' && !user.isLogin) {
     next('/login')
-  } else if (to.meta.redirectHome && store.state.user.isLogin) {
+  } else if (redirectHome && user.isLogin) {
     next('/')
   } else {
     next()

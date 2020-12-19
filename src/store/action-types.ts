@@ -10,3 +10,5 @@ export const SET_CURRENT_COLUMN = 'SET_CURRENT_COLUMN'
 export const SET_ARTICLE_LIST = 'SET_ARTICLE_LIST'
 // 设置loading
 export const SET_LOADING = 'SET_LOADING'
+// 创建文章
+export const CREATE_ARTICLE = 'CREATE_ARTICLE'

@@ -5,7 +5,8 @@ import {
   getColumnInfo,
   getArticleList,
   login,
-  getUserInfo
+  getUserInfo,
+  createArticle
 } from '@/api'
 import * as types from '@/store/action-types'
 import {
@@ -77,6 +78,9 @@ const store = createStore<GlobalDataProps>({
     async [types.SET_USER]({ commit }) {
       const data = await getUserInfo()
       commit(types.SET_USER, data)
+    },
+    async [types.CREATE_ARTICLE](store, payload) {
+      await createArticle(payload)
     }
   }
 })

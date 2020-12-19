@@ -39,3 +39,10 @@ export const register = data =>
     method: 'post',
     data
   })
+// 新建文章
+export const createArticle = data =>
+  request({
+    url: `/posts`,
+    method: 'post',
+    data
+  })

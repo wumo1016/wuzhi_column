@@ -1,10 +1,16 @@
 <template>
   <div class="file_upload">
-    <button class="btn btn-primary" @click.prevent="submit">
-      <span v-if="fileStatus === 'ready'">点击上传</span>
-      <span v-if="fileStatus === 'loading'">正在上传...</span>
-      <span v-if="fileStatus === 'success'">上传成功</span>
-    </button>
+    <div class="file_upload_container" @click.prevent="submit" v-bind="$attrs">
+      <slot v-if="fileStatus === 'ready'" name="default">
+        <button class="btn btn-primary" disabled>点击上传</button>
+      </slot>
+      <slot v-else-if="fileStatus === 'loading'" name="loading">
+        <button class="btn btn-primary" disabled>正在上传...</button>
+      </slot>
+      <slot v-else name="success" :uploadData="uploadData">
+        <button class="btn btn-primary" disabled>上传成功</button>
+      </slot>
+    </div>
     <input
       type="file"
       class="file_input d-none"
@@ -15,19 +21,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 type UploadStatus = 'ready' | 'loading' | 'success' | 'error'
+type CheckFunction = (file: File) => boolean
 import axios from '@/api/request'
 export default defineComponent({
+  inheritAttrs: false,
   props: {
     action: {
       type: String,
       required: true
+    },
+    beforeUpload: {
+      type: Function as PropType<CheckFunction>
     }
   },
-  setup(props) {
+  emits: ['on-success', 'on-error'],
+  setup(props, ctx) {
     const fileInput = ref<null | HTMLInputElement>(null)
     const fileStatus = ref<UploadStatus>('ready')
+    const uploadData = ref()
     const submit = () => {
       if (fileInput.value) {
         fileInput.value.click()
@@ -36,18 +49,30 @@ export default defineComponent({
     const handleChange = (e: Event) => {
       const currentTarget = e.target as HTMLInputElement
       if (currentTarget.files) {
-        fileStatus.value = 'loading'
         const files = Array.from(currentTarget.files)
+        if (props.beforeUpload) {
+          const result = props.beforeUpload(files[0])
+          if (!result) {
+            if (fileInput.value) {
+              fileInput.value.value = ''
+            }
+            return
+          }
+        }
+        fileStatus.value = 'loading'
         const formData = new FormData()
         formData.append('file', files[0])
         axios
           .post(props.action, formData)
           .then(data => {
             fileStatus.value = 'success'
+            uploadData.value = data
+            ctx.emit('on-success', data)
             console.log(data)
           })
-          .catch(() => {
+          .catch(error => {
             fileStatus.value = 'error'
+            ctx.emit('on-error', { error })
           })
           .finally(() => {
             if (fileInput.value) {
@@ -60,7 +85,8 @@ export default defineComponent({
       fileInput,
       submit,
       fileStatus,
-      handleChange
+      handleChange,
+      uploadData
     }
   }
 })

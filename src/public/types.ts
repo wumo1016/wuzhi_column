@@ -2,13 +2,14 @@ export interface UserProps {
   isLogin: boolean
   nickName?: string
   _id?: string
-  columnId?: number
+  column?: number
   email?: string
   description?: string
 }
 
-interface ImageProps {
+export interface ImageProps {
   url: string
+  _id?: string
   dealUrl?: string
 }
 
@@ -20,13 +21,13 @@ export interface ColumnProps {
 }
 
 export interface ArticleProps {
-  _id: string | ''
+  _id?: string
   column: string
   title: string
   excerpt?: string
   content?: string
   image?: ImageProps
-  createdAt: string
+  author: string
 }
 
 export interface GlobalDataProps {
