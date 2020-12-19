@@ -1,10 +1,11 @@
 <template>
   <div class="create_article">
-    <h2>新建文章</h2>
+    <h2>{{ isEdit ? '编辑文章' : '新建文章' }}</h2>
     <validate-form @form-submit="onFormSubmit">
       <div class="mb3">
         <Upload
           :before-upload="beforeUpload"
+          :uploaded="uploaded"
           action="/upload"
           @on-success="onSuccess"
           @on-error="onError"
@@ -47,24 +48,28 @@
         />
       </div>
       <template #submit>
-        <button class="btn btn-primary btn-large">发表文章</button>
+        <button class="btn btn-primary btn-large">
+          {{ isEdit ? '保存文章' : '发表文章' }}
+        </button>
       </template>
     </validate-form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps, ImageProps } from '@/public/types'
 import { ArticleProps } from '@/public/types'
 import ValidateInput, { RulesProp } from '@/components/validateInput.vue'
 import ValidateForm from '@/components/validateForm.vue'
 import Upload from '@/components/upload.vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { brforeUploadCheck } from '@/public/utils'
 import createMessage from '@/public/createMessage'
 import * as types from '@/store/action-types'
+import { getArticleInfo } from '@/api'
+import { AxiosResponse } from 'axios'
 export default defineComponent({
   name: 'CreateArticle',
   components: {
@@ -76,13 +81,35 @@ export default defineComponent({
     const titleVal = ref('')
     const contentVal = ref('')
     const imgVal = ref()
+    const store = useStore<GlobalDataProps>()
+    const router = useRouter()
+    const isEdit = ref(false)
+    const uploaded = ref()
+    // 编辑
+    const route = useRoute()
+    const { id: articleId } = route.query
+    onMounted(() => {
+      if (articleId) {
+        isEdit.value = true
+        getArticleInfo(articleId).then((res: AxiosResponse<ArticleProps>) => {
+          const { image, title, content } = res.data
+          if (image) {
+            uploaded.value = image
+          }
+          console.log(res.data)
+          titleVal.value = title
+          contentVal.value = content
+        })
+      }
+    })
+    // 表单规则
     const titleRules: RulesProp = [
       { type: 'required', message: '文章标题不能为空' }
     ]
     const contentRules: RulesProp = [
       { type: 'required', message: '文章详情不能为空' }
     ]
-    const store = useStore<GlobalDataProps>()
+    // 上传图片
     const beforeUpload = (file: File) => {
       const { passed, type } = brforeUploadCheck(file, {
         format: ['image/jpeg', 'image/png'],
@@ -114,12 +141,10 @@ export default defineComponent({
         message: '上传失败'
       })
     }
-
-    const router = useRouter()
+    // 提交
     const onFormSubmit = async (result: boolean) => {
       if (result) {
         const { column, _id } = store.state.user
-        console.log(store.state.user)
         if (column) {
           const newPosts: ArticleProps = {
             title: titleVal.value,
@@ -130,15 +155,22 @@ export default defineComponent({
           if (imgVal.value) {
             newPosts.image = imgVal.value
           }
-          await store.dispatch(types.CREATE_ARTICLE, newPosts)
+          if (isEdit.value) {
+            await store.dispatch(types.PATCH_ARTICLE, {
+              id: articleId,
+              data: newPosts
+            })
+          } else {
+            await store.dispatch(types.CREATE_ARTICLE, newPosts)
+          }
           createMessage({
             type: 'success',
-            message: '发表成功,2秒后跳转到专栏',
+            message: '操作成功,1秒后跳转到专栏',
             timeout: 2000
           })
           setTimeout(() => {
             router.push(`/column/${column}`)
-          }, 2000)
+          }, 1000)
         }
       }
     }
@@ -150,7 +182,9 @@ export default defineComponent({
       onFormSubmit,
       beforeUpload,
       onSuccess,
-      onError
+      onError,
+      isEdit,
+      uploaded
     }
   }
 })

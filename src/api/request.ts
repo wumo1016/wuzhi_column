@@ -31,7 +31,7 @@ axios.interceptors.response.use(
   response => {
     store.commit(types.SET_LOADING, false)
     if (response.data && response.data.code === 0) {
-      return Promise.resolve(response.data.data)
+      return Promise.resolve(response.data)
     } else {
       return Promise.reject(response)
     }

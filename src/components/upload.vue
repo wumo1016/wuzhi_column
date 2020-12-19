@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 type UploadStatus = 'ready' | 'loading' | 'success' | 'error'
 type CheckFunction = (file: File) => boolean
 import axios from '@/api/request'
@@ -34,6 +34,9 @@ export default defineComponent({
     },
     beforeUpload: {
       type: Function as PropType<CheckFunction>
+    },
+    uploaded: {
+      type: Object
     }
   },
   emits: ['on-success', 'on-error'],
@@ -46,6 +49,15 @@ export default defineComponent({
         fileInput.value.click()
       }
     }
+    watch(
+      () => props.uploaded,
+      newValue => {
+        if (newValue) {
+          fileStatus.value = 'success'
+          uploadData.value = newValue
+        }
+      }
+    )
     const handleChange = (e: Event) => {
       const currentTarget = e.target as HTMLInputElement
       if (currentTarget.files) {
@@ -64,11 +76,11 @@ export default defineComponent({
         formData.append('file', files[0])
         axios
           .post(props.action, formData)
-          .then(data => {
+          .then(res => {
+            const data = res.data
             fileStatus.value = 'success'
             uploadData.value = data
             ctx.emit('on-success', data)
-            console.log(data)
           })
           .catch(error => {
             fileStatus.value = 'error'

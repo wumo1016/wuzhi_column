@@ -7,7 +7,8 @@ import {
   login,
   getUserInfo,
   createArticle,
-  getArticleInfo
+  getArticleInfo,
+  updateArtical
 } from '@/api'
 import * as types from '@/store/action-types'
 import {
@@ -65,33 +66,36 @@ const store = createStore<GlobalDataProps>({
 
   actions: {
     async [types.SET_COLUMN_LIST]({ commit }) {
-      const data = await getColumnList()
-      commit(types.SET_COLUMN_LIST, data)
+      const res = await getColumnList()
+      commit(types.SET_COLUMN_LIST, res.data)
     },
     async [types.SET_CURRENT_COLUMN]({ commit }, id: string) {
       commit(types.SET_CURRENT_COLUMN, null)
-      const data = await getColumnInfo(id)
-      commit(types.SET_CURRENT_COLUMN, data)
+      const res = await getColumnInfo(id)
+      commit(types.SET_CURRENT_COLUMN, res.data)
     },
     async [types.SET_ARTICLE_LIST]({ commit }, id: string) {
-      const data = await getArticleList(id)
-      commit(types.SET_ARTICLE_LIST, data)
+      const res = await getArticleList(id)
+      commit(types.SET_ARTICLE_LIST, res.data)
     },
     async [types.SET_TOKEN]({ commit }, payload) {
-      const data = await login(payload)
-      commit(types.SET_TOKEN, data)
+      const res = await login(payload)
+      commit(types.SET_TOKEN, res.data)
     },
     async [types.SET_USER]({ commit }) {
-      const data = await getUserInfo()
-      commit(types.SET_USER, data)
+      const res = await getUserInfo()
+      commit(types.SET_USER, res.data)
     },
     async [types.CREATE_ARTICLE](store, payload) {
       await createArticle(payload)
     },
     async [types.SET_CURRENT_ARTICLE]({ commit }, payload) {
       commit(types.SET_CURRENT_ARTICLE, null)
-      const data = await getArticleInfo(payload)
-      commit(types.SET_CURRENT_ARTICLE, data)
+      const res = await getArticleInfo(payload)
+      commit(types.SET_CURRENT_ARTICLE, res.data)
+    },
+    async [types.PATCH_ARTICLE](store, payload) {
+      await updateArtical(payload)
     }
   }
 })

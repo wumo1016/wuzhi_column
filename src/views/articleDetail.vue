@@ -47,16 +47,12 @@
       <div v-if="showEditArea" class="btn-group mt-5">
         <router-link
           type="button"
-          class="btn btn-success"
+          class="btn btn-primary me-3"
           :to="{ path: '/createEdit', query: { id: currentArticle._id } }"
         >
           编辑
         </router-link>
-        <button
-          type="button"
-          class="btn btn-danger"
-          @click.prevent="modalIsVisible = true"
-        >
+        <button class="btn btn-danger" @click.prevent="modalIsVisible = true">
           删除
         </button>
       </div>
@@ -67,7 +63,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import MarkdownIt from 'markdown-it'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import store from '@/store'
 import * as types from '@/store/action-types'
 import { ImageProps, UserProps } from '@/public/types'
@@ -75,7 +71,6 @@ export default defineComponent({
   name: 'ArticleDetail',
   setup() {
     const route = useRoute()
-    const router = useRouter()
     const md = new MarkdownIt()
     const currentId = route.params.id
     const modalIsVisible = ref(false)

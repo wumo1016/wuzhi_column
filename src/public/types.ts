@@ -26,7 +26,7 @@ export interface ArticleProps {
   column: string
   title: string
   excerpt?: string
-  content?: string
+  content: string
   image?: ImageProps
   author?: string | UserProps
   createdAt?: string

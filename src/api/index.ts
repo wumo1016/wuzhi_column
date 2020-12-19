@@ -52,3 +52,10 @@ export const getArticleInfo = id =>
     url: `/posts/${id}`,
     method: 'get'
   })
+// 更新当前文章信息
+export const updateArtical = ({ id, data }) =>
+  request({
+    url: `/posts/${id}`,
+    method: 'patch',
+    data
+  })

@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType, reactive } from 'vue'
+import { computed, defineComponent, onMounted, PropType, reactive } from 'vue'
 import { emitter } from './validateForm.vue'
 const emailReg = /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
 interface RuleProp {
@@ -51,7 +51,12 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const inputRef = reactive({
-      val: props.modelValue || '',
+      val: computed({
+        get: () => props.modelValue || '',
+        set: val => {
+          ctx.emit('update:modelValue', val)
+        }
+      }),
       error: false,
       message: ''
     })
