@@ -59,3 +59,9 @@ export const updateArtical = ({ id, data }) =>
     method: 'patch',
     data
   })
+// 删除当前文章
+export const deleteArtical = id =>
+  request({
+    url: `/posts/${id}`,
+    method: 'delete'
+  })

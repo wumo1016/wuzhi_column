@@ -85,6 +85,7 @@ export default defineComponent({
     const router = useRouter()
     const isEdit = ref(false)
     const uploaded = ref()
+
     // 编辑
     const route = useRoute()
     const { id: articleId } = route.query
@@ -166,7 +167,7 @@ export default defineComponent({
           createMessage({
             type: 'success',
             message: '操作成功,1秒后跳转到专栏',
-            timeout: 2000
+            timeout: 1000
           })
           setTimeout(() => {
             router.push(`/column/${column}`)

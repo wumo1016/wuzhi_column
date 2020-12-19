@@ -5,18 +5,16 @@
       type="text"
       class="form-control"
       :class="{ 'is-invalid': inputRef.error }"
-      :value="inputRef.val"
       @blur="validateInput"
-      @input="updateValue"
       v-bind="$attrs"
+      v-model="inputRef.val"
     />
     <textarea
       v-else
       class="form-control"
       :class="{ 'is-invalid': inputRef.error }"
-      :value="inputRef.val"
+      v-model="inputRef.val"
       @blur="validateInput"
-      @input="updateValue"
       v-bind="$attrs"
     />
     <span v-show="inputRef.error" class="invalid-feedback">
@@ -60,11 +58,6 @@ export default defineComponent({
       error: false,
       message: ''
     })
-    const updateValue = (e: KeyboardEvent) => {
-      const targetValue = (e.target as HTMLInputElement).value
-      inputRef.val = targetValue
-      ctx.emit('update:modelValue', targetValue)
-    }
     const validateInput = () => {
       if (props.rules) {
         const allPassed = props.rules.every(rule => {
@@ -96,8 +89,7 @@ export default defineComponent({
     })
     return {
       inputRef,
-      validateInput,
-      updateValue
+      validateInput
     }
   }
 })

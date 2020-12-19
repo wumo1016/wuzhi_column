@@ -52,11 +52,18 @@
         >
           编辑
         </router-link>
-        <button class="btn btn-danger" @click.prevent="modalIsVisible = true">
+        <button class="btn btn-danger" @click.prevent="modalVisible = true">
           删除
         </button>
       </div>
     </article>
+    <Modal
+      :visible="modalVisible"
+      @modal-on-close="modalOnClose"
+      @modal-on-confirm="modalOnConfirm"
+    >
+      <p>确定要删除这篇文章</p>
+    </Modal>
   </div>
 </template>
 
@@ -67,13 +74,36 @@ import { useRoute } from 'vue-router'
 import store from '@/store'
 import * as types from '@/store/action-types'
 import { ImageProps, UserProps } from '@/public/types'
+import Modal from '@/components/modal.vue'
+import createMessage from '@/public/createMessage'
+import router from '@/router'
 export default defineComponent({
   name: 'ArticleDetail',
+  components: {
+    Modal
+  },
   setup() {
     const route = useRoute()
     const md = new MarkdownIt()
     const currentId = route.params.id
-    const modalIsVisible = ref(false)
+    const column = computed(
+      () => store.state.currentArticle && store.state.currentArticle.column
+    )
+    // 确认框
+    const modalVisible = ref(false)
+    const modalOnConfirm = async () => {
+      modalVisible.value = false
+      await store.dispatch(types.DELETE_ARTICLE, currentId)
+      createMessage({
+        type: 'success',
+        message: '操作成功,跳转到专栏',
+        timeout: 1000
+      })
+      router.push(`/column/${column.value}`)
+    }
+    const modalOnClose = () => {
+      modalVisible.value = false
+    }
     onMounted(() => {
       store.dispatch(types.SET_CURRENT_ARTICLE, currentId)
     })
@@ -124,7 +154,9 @@ export default defineComponent({
       currentHTML,
       user,
       showEditArea,
-      modalIsVisible
+      modalVisible,
+      modalOnConfirm,
+      modalOnClose
     }
   }
 })

@@ -104,7 +104,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-.file_upload {
-}
-</style>
+<style lang="scss" scoped></style>

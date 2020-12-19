@@ -16,3 +16,5 @@ export const CREATE_ARTICLE = 'CREATE_ARTICLE'
 export const SET_CURRENT_ARTICLE = 'SET_CURRENT_ARTICLE'
 // 更新文章
 export const PATCH_ARTICLE = 'PATCH_ARTICLE'
+// 删除文章
+export const DELETE_ARTICLE = 'DELETE_ARTICLE'
