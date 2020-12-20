@@ -29,18 +29,14 @@ const store = createStore<GlobalDataProps>({
     columnList: [],
     currentColumn: null,
     articleList: [],
-    currentArticle: null
+    currentArticle: null,
+    columnTotal: 0
   },
-  getters: {
-    getArticleListByCid(state) {
-      return (cid: string) => {
-        return state.articleList.filter(v => v.column === cid)
-      }
-    }
-  },
+  getters: {},
   mutations: {
     [types.SET_COLUMN_LIST](state, data) {
-      state.columnList = data.list
+      state.columnList = state.columnList.concat(data.list)
+      state.columnTotal = data.count
     },
     [types.SET_CURRENT_COLUMN](state, data) {
       state.currentColumn = data
@@ -66,8 +62,11 @@ const store = createStore<GlobalDataProps>({
   },
 
   actions: {
-    async [types.SET_COLUMN_LIST]({ commit }) {
-      const res = await getColumnList()
+    async [types.SET_COLUMN_LIST](
+      { commit },
+      params = { currentPage: 1, pageSize: 6 }
+    ) {
+      const res = await getColumnList(params)
       commit(types.SET_COLUMN_LIST, res.data)
     },
     async [types.SET_CURRENT_COLUMN]({ commit }, id: string) {

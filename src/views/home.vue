@@ -16,9 +16,14 @@
     <h4 class="font-weight-bold text-center">发现精彩</h4>
     <ColumnList :list="list" />
     <div class="text-center">
-      <button class="btn btn-outline-primary mt-2 mb-5 mx-auto btn-block w-25">
+      <button
+        v-if="hasMore"
+        @click="loadMorePage"
+        class="btn btn-outline-primary mt-2 mb-5 mx-auto btn-block w-25"
+      >
         加载更多
       </button>
+      <span v-else>已经到底拉...</span>
     </div>
   </div>
 </template>
@@ -29,16 +34,29 @@ import { useStore } from 'vuex'
 import ColumnList from '@/components/columnList.vue'
 import { GlobalDataProps } from '@/public/types'
 import * as types from '@/store/action-types'
+import UseLoadMore from '@/hooks/useLoadMore'
 export default defineComponent({
   components: { ColumnList },
   setup() {
     const store = useStore<GlobalDataProps>()
     const list = computed(() => store.state.columnList)
+    const length = computed(() => list.value.length)
+    const total = computed(() => store.state.columnTotal)
+    const { loadMorePage, hasMore } = UseLoadMore(
+      types.SET_COLUMN_LIST,
+      total,
+      length,
+      { currentPage: 2, pageSize: 6 }
+    )
     onMounted(() => {
-      store.dispatch(types.SET_COLUMN_LIST)
+      if (list.value.length < 1) {
+        store.dispatch(types.SET_COLUMN_LIST)
+      }
     })
     return {
-      list
+      list,
+      loadMorePage,
+      hasMore
     }
   }
 })

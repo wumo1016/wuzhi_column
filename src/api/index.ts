@@ -1,10 +1,11 @@
 import request from './request'
 
 // 获取专栏列表
-export const getColumnList = () =>
+export const getColumnList = params =>
   request({
     url: '/columns',
-    method: 'get'
+    method: 'get',
+    params
   })
 // 获取专栏信息
 export const getColumnInfo = (id: string) =>

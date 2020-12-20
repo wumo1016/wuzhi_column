@@ -41,6 +41,7 @@ export interface GlobalDataProps {
   currentColumn: ColumnProps | null
   articleList: ArticleProps[]
   currentArticle: ArticleProps | null
+  columnTotal: number
 }
 
 export interface MessageProps {
