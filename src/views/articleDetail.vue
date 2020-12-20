@@ -132,7 +132,7 @@ export default defineComponent({
           } else {
             author.avatar = {
               url: '',
-              dealUrl: require('@/assets/column.jpg')
+              dealUrl: require('@/assets/blank.png')
             }
           }
           return author

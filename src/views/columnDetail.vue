@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted } from 'vue'
+import { computed, defineComponent, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import PostList from '@/components/postList.vue'
@@ -33,7 +33,6 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const store = useStore<GlobalDataProps>()
-    const currentId = route.params.id
     const columnInfo = computed(() => {
       const column = store.state.currentColumn
       if (column) {
@@ -43,7 +42,7 @@ export default defineComponent({
         } else {
           column.avatar = {
             url: '',
-            dealUrl: require('@/assets/column.jpg')
+            dealUrl: require('@/assets/blank.png')
           }
         }
       }
@@ -56,15 +55,26 @@ export default defineComponent({
         } else {
           item.image = {
             url: '',
-            dealUrl: require('@/assets/column.jpg')
+            dealUrl: require('@/assets/blank.png')
           }
         }
         return item
       })
     )
+    const getColumnData = id => {
+      store.dispatch(types.SET_CURRENT_COLUMN, id)
+      store.dispatch(types.SET_ARTICLE_LIST, id)
+    }
+    watch(
+      () => route.params.id,
+      v => {
+        if (v) {
+          getColumnData(v)
+        }
+      }
+    )
     onMounted(() => {
-      store.dispatch(types.SET_CURRENT_COLUMN, currentId)
-      store.dispatch(types.SET_ARTICLE_LIST, currentId)
+      getColumnData(route.params.id)
     })
     return {
       columnInfo,

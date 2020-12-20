@@ -12,12 +12,12 @@ const useLoadMore = (
   params: LoadParams = { currentPage: 1, pageSize: 5 }
 ) => {
   const currentPage = ref(params.currentPage)
-  const requestParams = {
+  const requestParams = computed(() => ({
     currentPage: currentPage.value,
     pageSize: params.pageSize
-  }
+  }))
   const loadMorePage = () => {
-    store.dispatch(actionName, requestParams).then(() => {
+    store.dispatch(actionName, requestParams.value).then(() => {
       currentPage.value++
     })
   }

@@ -42,7 +42,7 @@ export default defineComponent({
         } else {
           item.avatar = {
             url: '',
-            dealUrl: require('@/assets/column.jpg')
+            dealUrl: require('@/assets/blank.png')
           }
         }
         return item
