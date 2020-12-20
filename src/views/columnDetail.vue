@@ -17,22 +17,38 @@
       </div>
     </div>
     <PostList :list="list" />
+    <Pagination
+      :total="pageData.total"
+      :currentPage="pageData.currentPage"
+      :pageSize="pageData.pageSize"
+      :pageSizes="[5, 10, 15, 20]"
+      layout="total, prev, next"
+      @currentChange="currentChange"
+      @pageSizeChange="pageSizeChange"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, watch } from 'vue'
+import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import PostList from '@/components/postList.vue'
+import Pagination from '@/components/pagination.vue'
 import * as types from '@/store/action-types'
 import { GlobalDataProps } from '@/public/types'
 
 export default defineComponent({
-  components: { PostList },
+  components: { PostList, Pagination },
   setup() {
     const route = useRoute()
     const store = useStore<GlobalDataProps>()
+    const pageData = reactive({
+      total: 0,
+      currentPage: 1,
+      pageSize: 5
+    })
+    const total = ref(0)
     const columnInfo = computed(() => {
       const column = store.state.currentColumn
       if (column) {
@@ -61,9 +77,18 @@ export default defineComponent({
         return item
       })
     )
-    const getColumnData = id => {
-      store.dispatch(types.SET_CURRENT_COLUMN, id)
-      store.dispatch(types.SET_ARTICLE_LIST, id)
+    const getArticleData = async (id, currentPage = 1, pageSize = 5) => {
+      const res = await store.dispatch(types.SET_ARTICLE_LIST, {
+        id,
+        params: { currentPage, pageSize }
+      })
+      pageData.total = res.count
+      pageData.currentPage = res.currentPage
+      pageData.pageSize = res.pageSize
+    }
+    const getColumnData = async id => {
+      await store.dispatch(types.SET_CURRENT_COLUMN, id)
+      getArticleData(id)
     }
     watch(
       () => route.params.id,
@@ -76,9 +101,19 @@ export default defineComponent({
     onMounted(() => {
       getColumnData(route.params.id)
     })
+    const currentChange = page => {
+      getArticleData(route.params.id, page, pageData.pageSize)
+    }
+    const pageSizeChange = size => {
+      getArticleData(route.params.id, 1, size)
+    }
     return {
       columnInfo,
-      list
+      list,
+      total,
+      pageData,
+      currentChange,
+      pageSizeChange
     }
   }
 })

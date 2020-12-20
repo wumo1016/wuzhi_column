@@ -74,9 +74,10 @@ const store = createStore<GlobalDataProps>({
       const res = await getColumnInfo(id)
       commit(types.SET_CURRENT_COLUMN, res.data)
     },
-    async [types.SET_ARTICLE_LIST]({ commit }, id: string) {
-      const res = await getArticleList(id)
+    async [types.SET_ARTICLE_LIST]({ commit }, data) {
+      const res = await getArticleList(data)
       commit(types.SET_ARTICLE_LIST, res.data)
+      return res.data
     },
     async [types.SET_TOKEN]({ commit }, payload) {
       const res = await login(payload)

@@ -15,10 +15,11 @@ export const getColumnInfo = (id: string) =>
   })
 
 // 获取专栏文章列表
-export const getArticleList = (id: string) =>
+export const getArticleList = ({ id, params }) =>
   request({
     url: `/columns/${id}/posts`,
-    method: 'get'
+    method: 'get',
+    params
   })
 // 登录
 export const login = data =>
