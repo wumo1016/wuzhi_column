@@ -29,6 +29,7 @@ export default defineComponent({
       }
     }
     emitter.on('formItemCreateed', callback)
+    emitter.on('formSubmit', submitForm)
     onUnmounted(() => {
       emitter.off('formItemCreateed', callback)
       functionArr = []

@@ -86,6 +86,11 @@ export default defineComponent({
       {
         type: 'required',
         message: '密码不能为空'
+      },
+      {
+        type: 'custom',
+        validator: () => password.value.length > 5,
+        message: '密码至少为6位'
       }
     ]
     const rePasswordRules: RulesProp = [

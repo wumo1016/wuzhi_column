@@ -8,6 +8,7 @@
       @blur="validateInput"
       v-bind="$attrs"
       v-model="inputRef.val"
+      @keydown.enter="onSubmit"
     />
     <textarea
       v-else
@@ -16,6 +17,7 @@
       v-model="inputRef.val"
       @blur="validateInput"
       v-bind="$attrs"
+      @keydown.enter="onSubmit"
     />
     <span v-show="inputRef.error" class="invalid-feedback">
       {{ inputRef.message }}
@@ -87,9 +89,11 @@ export default defineComponent({
     onMounted(() => {
       emitter.emit('formItemCreateed', validateInput)
     })
+    const onSubmit = () => emitter.emit('formSubmit')
     return {
       inputRef,
-      validateInput
+      validateInput,
+      onSubmit
     }
   }
 })
