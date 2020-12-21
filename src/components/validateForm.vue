@@ -3,7 +3,7 @@
     <slot name="default"></slot>
     <div class="submit-area" @click.prevent="submitForm">
       <slot name="submit">
-        <button type="submit" class="btn btn-primary">提交</button>
+        <!-- <button type="submit" class="btn btn-primary">提交</button> -->
       </slot>
     </div>
   </form>
@@ -22,6 +22,7 @@ export default defineComponent({
       const res = functionArr.map(cb => cb()).every(v => v)
       ctx.emit('formSubmit', res)
     }
+    const validateForm = () => functionArr.map(cb => cb()).every(v => v)
     const callback = (func?: validateFunc) => {
       if (func) {
         functionArr.push(func)
@@ -33,7 +34,8 @@ export default defineComponent({
       functionArr = []
     })
     return {
-      submitForm
+      submitForm,
+      validateForm
     }
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="create_article">
     <h2>{{ isEdit ? '编辑文章' : '新建文章' }}</h2>
-    <validate-form @form-submit="onFormSubmit">
+    <validate-form ref="articleForm">
       <div class="mb3">
         <Upload
           :before-upload="beforeUpload"
@@ -47,12 +47,15 @@
           v-model="contentVal"
         />
       </div>
-      <template #submit>
-        <button class="btn btn-primary btn-large ms-2">
-          {{ isEdit ? '保存文章' : '发表文章' }}
-        </button>
-      </template>
     </validate-form>
+    <div>
+      <button class="btn btn-primary btn-large me-2">
+        <router-link :to="`/column/${column}`">返回专栏</router-link>
+      </button>
+      <button class="btn btn-primary btn-large" @click="onFormSubmit">
+        {{ isEdit ? '保存文章' : '发表文章' }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -86,6 +89,7 @@ export default defineComponent({
     const isEdit = ref(false)
     const uploaded = ref()
     const column = computed(() => store.state.user.column)
+    const articleForm = ref()
 
     // 编辑
     const route = useRoute()
@@ -143,8 +147,8 @@ export default defineComponent({
       })
     }
     // 提交
-    const onFormSubmit = async (result: boolean) => {
-      if (result) {
+    const onFormSubmit = async () => {
+      if (articleForm.value.validateForm()) {
         const { column, _id } = store.state.user
         if (column) {
           const newPosts: ArticleProps = {
@@ -186,7 +190,8 @@ export default defineComponent({
       onError,
       isEdit,
       uploaded,
-      column
+      column,
+      articleForm
     }
   }
 })
