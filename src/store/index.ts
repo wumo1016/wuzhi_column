@@ -9,7 +9,8 @@ import {
   createArticle,
   getArticleInfo,
   updateArtical,
-  deleteArtical
+  deleteArtical,
+  updateUserInfo
 } from '@/api'
 import * as types from '@/store/action-types'
 import {
@@ -100,6 +101,10 @@ const store = createStore<GlobalDataProps>({
     },
     async [types.DELETE_ARTICLE](store, payload) {
       await deleteArtical(payload)
+    },
+    async [types.PATCH_USER_INFO]({ commit }, payload) {
+      const res = await updateUserInfo(payload)
+      commit(types.SET_USER, res.data)
     }
   }
 })

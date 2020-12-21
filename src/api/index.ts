@@ -67,3 +67,17 @@ export const deleteArtical = id =>
     url: `/posts/${id}`,
     method: 'delete'
   })
+// 更新个人信息
+export const updateUserInfo = ({ id, data }) =>
+  request({
+    url: `/user/${id}`,
+    method: 'patch',
+    data
+  })
+// 更新专栏信息
+export const updateColumnInfo = ({ id, data }) =>
+  request({
+    url: `/columns/${id}`,
+    method: 'patch',
+    data
+  })

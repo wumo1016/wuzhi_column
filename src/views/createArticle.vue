@@ -48,7 +48,7 @@
         />
       </div>
       <template #submit>
-        <button class="btn btn-primary btn-large">
+        <button class="btn btn-primary btn-large ms-2">
           {{ isEdit ? '保存文章' : '发表文章' }}
         </button>
       </template>
@@ -57,15 +57,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps, ImageProps } from '@/public/types'
 import { ArticleProps } from '@/public/types'
 import ValidateInput, { RulesProp } from '@/components/validateInput.vue'
 import ValidateForm from '@/components/validateForm.vue'
 import Upload from '@/components/upload.vue'
-import { useRouter, useRoute } from 'vue-router'
 import { brforeUploadCheck } from '@/public/utils'
+import { useRouter, useRoute } from 'vue-router'
 import createMessage from '@/public/createMessage'
 import * as types from '@/store/action-types'
 import { getArticleInfo } from '@/api'
@@ -85,6 +85,7 @@ export default defineComponent({
     const router = useRouter()
     const isEdit = ref(false)
     const uploaded = ref()
+    const column = computed(() => store.state.user.column)
 
     // 编辑
     const route = useRoute()
@@ -97,7 +98,6 @@ export default defineComponent({
           if (image) {
             uploaded.value = image
           }
-          console.log(res.data)
           titleVal.value = title
           contentVal.value = content
         })
@@ -185,7 +185,8 @@ export default defineComponent({
       onSuccess,
       onError,
       isEdit,
-      uploaded
+      uploaded,
+      column
     }
   }
 })

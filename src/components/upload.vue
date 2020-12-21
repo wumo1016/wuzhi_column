@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { defineComponent, onMounted, PropType, ref, watch } from 'vue'
 type UploadStatus = 'ready' | 'loading' | 'success' | 'error'
 type CheckFunction = (file: File) => boolean
 import axios from '@/api/request'
@@ -58,6 +58,12 @@ export default defineComponent({
         }
       }
     )
+    onMounted(() => {
+      if (props.uploaded) {
+        fileStatus.value = 'success'
+        uploadData.value = props.uploaded
+      }
+    })
     const handleChange = (e: Event) => {
       const currentTarget = e.target as HTMLInputElement
       if (currentTarget.files) {

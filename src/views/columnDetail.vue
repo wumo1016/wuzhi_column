@@ -54,7 +54,7 @@ export default defineComponent({
       if (column) {
         const { avatar } = column
         if (avatar) {
-          avatar.dealUrl = `${avatar.url}?x-oss-process=image/resize,m_fill,h_110,w_200`
+          avatar.dealUrl = `${avatar.url}?x-oss-process=image/resize,m_fill,h_120,w_130`
         } else {
           column.avatar = {
             url: '',

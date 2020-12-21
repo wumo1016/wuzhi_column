@@ -38,6 +38,12 @@ const routes: Array<RouteRecordRaw> = [
         path: '/article/:id',
         name: 'ArticleDetail',
         component: () => import('@/views/articleDetail.vue')
+      },
+      {
+        path: '/editUserInfo',
+        name: 'EditUserInfo',
+        component: () => import('@/views/editUserInfo.vue'),
+        meta: { requiredLogin: true }
       }
     ]
   }

@@ -66,6 +66,7 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const onSubmit = async (res: boolean) => {
+      console.log(res)
       if (res) {
         const payload = {
           email: emailVal.value,

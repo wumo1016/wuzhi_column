@@ -18,3 +18,5 @@ export const SET_CURRENT_ARTICLE = 'SET_CURRENT_ARTICLE'
 export const PATCH_ARTICLE = 'PATCH_ARTICLE'
 // 删除文章
 export const DELETE_ARTICLE = 'DELETE_ARTICLE'
+// 更新用户信息
+export const PATCH_USER_INFO = 'PATCH_USER_INFO'
