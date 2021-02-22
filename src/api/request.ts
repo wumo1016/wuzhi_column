@@ -10,7 +10,7 @@ axios.interceptors.request.use(
   config => {
     store.commit(types.SET_LOADING, true)
     config.headers['Authorization'] = `Bearer ${getLocalToken()}`
-    const code = '0BC9ABB4AD85B874'
+    const code = 'A604E42F8587A97E'
     if (config.data instanceof FormData) {
       config.data.append('icode', code)
       config.headers['Content-Type'] = 'multipart/form-data'
